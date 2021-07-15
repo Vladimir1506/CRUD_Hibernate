@@ -89,6 +89,7 @@ public class UserView extends ViewAbstractClass {
 
     public void delete() {
         if (isUsersEmpty()) return;
+        getAll();
         System.out.println("Введите id пользователя, которого желаете удалить:");
         Long id = scanner().nextLong();
         User deletedUser = userController.getUserById(id);
@@ -108,6 +109,7 @@ public class UserView extends ViewAbstractClass {
 
     public void update() {
         if (isUsersEmpty()) return;
+        getAll();
         System.out.println("Введите id пользователя, которого хотите изменить:");
         Long id = scanner().nextLong();
         System.out.println("Введите новое имя пользователя:");
@@ -121,7 +123,7 @@ public class UserView extends ViewAbstractClass {
         System.out.println("Введите новую роль пользователя из перечисленных вариантов");
         System.out.println(Arrays.toString(Role.values()));
         Role role = Role.valueOf(scanner().nextLine().toUpperCase());
-        userController.updateUser(id, firstName, lastName,  region, role);
+        userController.updateUser(id, firstName, lastName, region, role);
         this.getAll();
     }
 

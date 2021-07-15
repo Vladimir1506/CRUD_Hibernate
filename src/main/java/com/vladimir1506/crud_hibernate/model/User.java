@@ -15,12 +15,15 @@ public class User {
     String firstName;
     @Column(name = "lastname")
     String lastName;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Post> posts;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     Region region;
     @Enumerated(EnumType.STRING)
     Role role;
+
+    public User() {
+    }
 
     public User(String firstName, String lastName, Region region, Role role) {
         this.firstName = firstName;

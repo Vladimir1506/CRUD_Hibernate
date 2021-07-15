@@ -13,10 +13,13 @@ public class Post {
     @Column(name = "content")
     private String content;
     @Column(name = "created")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date created;
     @Column(name = "updated")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date updated;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Post() {
@@ -29,7 +32,13 @@ public class Post {
     }
 
     public String toString() {
-        return "\n" + this.id + ". " + this.content + "\nДата создания: " + this.created + "\nДата изменения: " + this.updated;
+        return "\n" + this.id + ". "
+                + this.content
+                + "\nДата создания: " + this.created
+                + "\nДата изменения: " + this.updated +
+                "\nBy "
+                + user.getFirstName() + " "
+                + user.getLastName();
     }
 
     public Date getCreated() {

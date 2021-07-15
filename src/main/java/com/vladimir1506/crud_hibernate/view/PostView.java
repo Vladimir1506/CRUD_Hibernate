@@ -87,6 +87,7 @@ public class PostView extends ViewAbstractClass {
 
     public void getById() {
         if (isPostsEmpty()) return;
+        getAll();
         System.out.println("Введите id поста, который желаете получить:");
         Long id = scanner().nextLong();
         Post post = postController.getPostById(id);
@@ -95,6 +96,7 @@ public class PostView extends ViewAbstractClass {
 
     public void update() {
         if (isPostsEmpty()) return;
+        getAll();
         System.out.println("Введите id поста, содержимое которого хотите изменить:");
         Long id = scanner().nextLong();
         System.out.println("Введите новое содержимое поста:");

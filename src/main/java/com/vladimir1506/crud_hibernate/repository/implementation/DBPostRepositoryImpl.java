@@ -2,16 +2,10 @@ package com.vladimir1506.crud_hibernate.repository.implementation;
 
 import com.vladimir1506.crud_hibernate.HibernateUtil;
 import com.vladimir1506.crud_hibernate.model.Post;
-import com.vladimir1506.crud_hibernate.model.Region;
 import com.vladimir1506.crud_hibernate.repository.PostRepository;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -67,8 +61,15 @@ public class DBPostRepositoryImpl implements PostRepository {
     @Override
     public Post update(Post post) {
         Transaction transaction = null;
+        Post oldPost;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
+            oldPost = getById(post.getId());
+            System.out.println(oldPost);
+            post.setCreated(oldPost.getCreated());
+            post.setUpdated(new Date());
+            post.setUser(oldPost.getUser());
+            System.out.println(post);
             session.saveOrUpdate(post);
             transaction.commit();
         } catch (Exception e) {
@@ -82,7 +83,7 @@ public class DBPostRepositoryImpl implements PostRepository {
     @Override
     public void delete(Long id) {
         Transaction transaction = null;
-        Post post = null;
+        Post post;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             post = session.get(Post.class, id);

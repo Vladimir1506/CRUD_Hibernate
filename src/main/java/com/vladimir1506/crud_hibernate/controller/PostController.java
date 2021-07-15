@@ -5,7 +5,6 @@ import com.vladimir1506.crud_hibernate.model.User;
 import com.vladimir1506.crud_hibernate.repository.PostRepository;
 import com.vladimir1506.crud_hibernate.repository.implementation.DBPostRepositoryImpl;
 
-import java.util.Date;
 import java.util.List;
 
 public class PostController {
@@ -33,10 +32,9 @@ public class PostController {
         return postRepository.getById(id);
     }
 
-    public void updatePost(Long id, String name) {
-        Post updatedPost = new Post(name);
+    public void updatePost(Long id, String content) {
+        Post updatedPost = new Post(content);
         updatedPost.setId(id);
-        updatedPost.setUpdated(new Date());
         postRepository.update(updatedPost);
     }
 }
