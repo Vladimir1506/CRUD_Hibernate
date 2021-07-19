@@ -17,7 +17,7 @@ public class User {
     String lastName;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Post> posts;
-    @ManyToOne()
+    @ManyToOne
     Region region;
     @Enumerated(EnumType.STRING)
     Role role;

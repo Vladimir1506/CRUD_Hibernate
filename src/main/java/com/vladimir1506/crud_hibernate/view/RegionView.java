@@ -64,6 +64,7 @@ public class RegionView extends ViewAbstractClass {
 
     public void delete() {
         if (isRegionsEmpty()) return;
+        this.getAll();
         System.out.println("Введите id региона, который желаете удалить:");
         Long id = scanner().nextLong();
         Region deletedRegion = regionController.getRegionById(id);

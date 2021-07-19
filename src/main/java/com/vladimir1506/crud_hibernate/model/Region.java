@@ -15,7 +15,6 @@ public class Region {
     public Region() {
     }
 
-
     public Region(String name) {
         this.name = name;
     }
