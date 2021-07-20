@@ -15,7 +15,7 @@ public class User {
     String firstName;
     @Column(name = "lastname")
     String lastName;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Post> posts;
     @ManyToOne
     Region region;
@@ -44,8 +44,9 @@ public class User {
     public String toString() {
         String writePosts = null;
         String regionName = null;
+        List<Long> posts;
         if (this.posts != null) {
-            List<Long> posts = this.posts.stream().map(Post::getId).collect(Collectors.toList());
+            posts = this.posts.stream().map(Post::getId).collect(Collectors.toList());
             writePosts = posts.toString().replaceAll(" ", "");
         }
         if (this.region != null) {

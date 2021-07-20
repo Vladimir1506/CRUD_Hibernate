@@ -11,11 +11,14 @@ import java.util.List;
 public class DBUserRepositoryImpl implements UserRepository {
     @Override
     public List<User> getAll() {
-        List<User> users = null;
+        List users = null;
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            users = session.createQuery("from User").list();
+            users = session.createQuery(
+                    "select distinct u from User u " +
+                                   "left join fetch u.posts p order by u.id")
+                   .list();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
