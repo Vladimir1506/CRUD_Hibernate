@@ -1,4 +1,4 @@
-package com.vladimir1506.crud_hibernate;
+package com.vladimir1506.crud_hibernate.utils;
 
 import com.googlecode.flyway.core.Flyway;
 
