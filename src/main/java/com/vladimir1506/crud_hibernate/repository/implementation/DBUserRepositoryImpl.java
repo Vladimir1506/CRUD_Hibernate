@@ -1,6 +1,6 @@
 package com.vladimir1506.crud_hibernate.repository.implementation;
 
-import com.vladimir1506.crud_hibernate.HibernateUtil;
+import com.vladimir1506.crud_hibernate.utils.HibernateUtil;
 import com.vladimir1506.crud_hibernate.model.User;
 import com.vladimir1506.crud_hibernate.repository.UserRepository;
 import org.hibernate.Session;
@@ -13,7 +13,7 @@ public class DBUserRepositoryImpl implements UserRepository {
     public List<User> getAll() {
         List<User> users = null;
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             users = session.createQuery("from User").list();
             transaction.commit();
@@ -28,7 +28,7 @@ public class DBUserRepositoryImpl implements UserRepository {
     @Override
     public User save(User user) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
@@ -44,7 +44,7 @@ public class DBUserRepositoryImpl implements UserRepository {
     public User getById(Long id) {
         Transaction transaction = null;
         User user = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             user = session.get(User.class, id);
             transaction.commit();
@@ -59,7 +59,7 @@ public class DBUserRepositoryImpl implements UserRepository {
     @Override
     public User update(User user) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             session.saveOrUpdate(user);
             transaction.commit();
@@ -74,8 +74,8 @@ public class DBUserRepositoryImpl implements UserRepository {
     @Override
     public void delete(Long id) {
         Transaction transaction = null;
-        User user = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        User user;
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             user = session.get(User.class, id);
             session.delete(user);

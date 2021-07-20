@@ -1,14 +1,11 @@
 package com.vladimir1506.crud_hibernate.repository.implementation;
 
-import com.vladimir1506.crud_hibernate.HibernateUtil;
-import com.vladimir1506.crud_hibernate.model.Post;
+import com.vladimir1506.crud_hibernate.utils.HibernateUtil;
 import com.vladimir1506.crud_hibernate.model.Region;
 import com.vladimir1506.crud_hibernate.repository.RegionRepository;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DBRegionRepositoryImpl implements RegionRepository {
@@ -17,7 +14,7 @@ public class DBRegionRepositoryImpl implements RegionRepository {
     public List<Region> getAll() {
         List<Region> regions = null;
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             regions = session.createQuery("from Region").list();
             transaction.commit();
@@ -32,7 +29,7 @@ public class DBRegionRepositoryImpl implements RegionRepository {
     @Override
     public Region save(Region region) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             session.save(region);
             transaction.commit();
@@ -48,7 +45,7 @@ public class DBRegionRepositoryImpl implements RegionRepository {
     public Region getById(Long id) {
         Transaction transaction = null;
         Region region = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             region = session.get(Region.class, id);
             transaction.commit();
@@ -63,7 +60,7 @@ public class DBRegionRepositoryImpl implements RegionRepository {
     @Override
     public Region update(Region region) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             session.saveOrUpdate(region);
             transaction.commit();
@@ -78,8 +75,8 @@ public class DBRegionRepositoryImpl implements RegionRepository {
     @Override
     public void delete(Long id) {
         Transaction transaction = null;
-        Region region = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        Region region;
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             region = session.get(Region.class, id);
             session.delete(region);

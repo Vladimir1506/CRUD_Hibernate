@@ -1,6 +1,6 @@
 package com.vladimir1506.crud_hibernate.repository.implementation;
 
-import com.vladimir1506.crud_hibernate.HibernateUtil;
+import com.vladimir1506.crud_hibernate.utils.HibernateUtil;
 import com.vladimir1506.crud_hibernate.model.Post;
 import com.vladimir1506.crud_hibernate.repository.PostRepository;
 import org.hibernate.Session;
@@ -15,7 +15,7 @@ public class DBPostRepositoryImpl implements PostRepository {
     public List<Post> getAll() {
         List<Post> posts = null;
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             posts = session.createQuery("from Post").list();
             transaction.commit();
@@ -31,7 +31,7 @@ public class DBPostRepositoryImpl implements PostRepository {
     public Post getById(Long id) {
         Transaction transaction = null;
         Post post = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             post = session.get(Post.class, id);
             transaction.commit();
@@ -46,7 +46,7 @@ public class DBPostRepositoryImpl implements PostRepository {
     @Override
     public Post save(Post post) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             session.save(post);
             transaction.commit();
@@ -62,7 +62,7 @@ public class DBPostRepositoryImpl implements PostRepository {
     public Post update(Post post) {
         Transaction transaction = null;
         Post oldPost;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             oldPost = getById(post.getId());
             System.out.println(oldPost);
@@ -84,7 +84,7 @@ public class DBPostRepositoryImpl implements PostRepository {
     public void delete(Long id) {
         Transaction transaction = null;
         Post post;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             post = session.get(Post.class, id);
             session.delete(post);
