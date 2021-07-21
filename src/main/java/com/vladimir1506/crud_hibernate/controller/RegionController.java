@@ -8,14 +8,18 @@ import java.util.List;
 
 public class RegionController {
 
-    private final RegionRepository regionRepository;
+    private RegionRepository regionRepository;
 
     public RegionController() {
         this.regionRepository = new DBRegionRepositoryImpl();
     }
 
+    public void setRegionRepository(RegionRepository regionRepository) {
+        this.regionRepository = regionRepository;
+    }
+
     public Region createRegion(String name) {
-        Region region = new Region( name);
+        Region region = new Region(name);
         return regionRepository.save(region);
     }
 
