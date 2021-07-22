@@ -20,7 +20,7 @@ public class RegionControllerTest {
     @Mock
     DBRegionRepositoryImpl dbRegionRepository;
     @InjectMocks
-    private RegionController regionController;
+    private RegionController regionController = new RegionController(dbRegionRepository);
 
     @Before
     public void setUp() {
@@ -28,7 +28,6 @@ public class RegionControllerTest {
         Region region = new Region("US");
         region.setId(1L);
         regions.add(region);
-        regionController.setRegionRepository(dbRegionRepository);
         when(dbRegionRepository.getAll()).thenReturn(regions);
         when(dbRegionRepository.getById(1L)).thenReturn(region);
     }

@@ -14,7 +14,7 @@ public class RegionController {
         this.regionRepository = new DBRegionRepositoryImpl();
     }
 
-    public void setRegionRepository(RegionRepository regionRepository) {
+    public RegionController(RegionRepository regionRepository) {
         this.regionRepository = regionRepository;
     }
 
